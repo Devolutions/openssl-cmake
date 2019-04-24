@@ -27,6 +27,13 @@
 project( openssl )
 cmake_minimum_required( VERSION 3.1.0 )
 
+set(CMAKE_DISABLE_SOURCE_CHANGES ON)
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
+
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+option(WITH_APPS "Build applications" ON)
+
 # OpenSSL version detection imported from FindOpenSSL.cmake
 
 file(STRINGS "${CMAKE_SOURCE_DIR}/include/openssl/opensslv.h" openssl_version_str
@@ -103,6 +110,11 @@ add_definitions( -DOPENSSL_NO_STATIC_ENGINE )
 add_definitions( "-DOPENSSLDIR=\"/usr/local/ssl\"" )
 add_definitions( "-DENGINESDIR=\"/usr/local/engines-1.1\"" )
 
+if(MSVC)
+  include(MSVCRuntime)
+  configure_msvc_runtime()
+endif()
+
 if ( APPLE )
   set( CMAKE_MACOSX_RPATH ON )
   add_definitions( -DOPENSSL_SYSNAME_MACOSX )
@@ -111,9 +123,12 @@ endif()
 if( WIN32 AND NOT CYGWIN )
   add_definitions( -DOPENSSL_SYSNAME_WIN32 )
   add_definitions( -DWIN32_LEAN_AND_MEAN )
+  add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 
-  # avoid conflict: ocsp.h and wincrypt.h
-  add_definitions( -D_WINDLL )
+  if (BUILD_SHARED_LIBS)
+    # avoid conflict: ocsp.h and wincrypt.h
+    add_definitions( -D_WINDLL )
+  endif()
 endif()
 
 if( MINGW )
@@ -136,9 +151,12 @@ if ( WIN32 AND MINGW AND NOT CYGWIN )
   set( OPENSSL_EXPORT_VAR_AS_FUNCTION true )
 endif()
 
-add_subdirectory( crypto )
-add_subdirectory( ssl )
-add_subdirectory( apps )
+add_subdirectory(crypto)
+add_subdirectory(ssl)
+
+if(WITH_APPS)
+  add_subdirectory(apps)
+endif()
 
 file( COPY ${PROJECT_SOURCE_DIR}/include/internal DESTINATION include )
 file( COPY ${PROJECT_SOURCE_DIR}/include/openssl DESTINATION include )
