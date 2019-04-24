@@ -23,11 +23,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-if( BUILD_SHARED_LIBS )
-    add_definitions ( -DOPENSSL_BUILD_SHLIBSSL )
+if(BUILD_SHARED_LIBS)
+    add_definitions(-DOPENSSL_BUILD_SHLIBSSL)
 endif()
 
-set ( LIBSRC
+set(LIBSRC
   bio_ssl.c d1_lib.c d1_msg.c d1_srtp.c methods.c packet.c pqueue.c s3_cbc.c s3_enc.c s3_lib.c
   s3_msg.c ssl_asn1.c ssl_cert.c ssl_ciph.c ssl_conf.c ssl_err.c ssl_init.c ssl_lib.c
   ssl_mcnf.c ssl_rsa.c ssl_sess.c ssl_stat.c ssl_txt.c ssl_utst.c t1_enc.c t1_lib.c
@@ -39,17 +39,14 @@ set ( LIBSRC
   statem/statem_lib.c statem/statem_srvr.c
   )
 
-if( ANDROID )
-  add_library ( ssl SHARED ${LIBSRC} )
-else()
-  add_library ( ssl ${LIBSRC} )
-endif()
-target_link_libraries ( ssl crypto )
+add_library(ssl ${LIBSRC})
 
-set_target_properties( ssl PROPERTIES
-  VERSION "${LIB_VERSION}" SOVERSION "${LIB_SOVERSION}" )
+target_link_libraries(ssl crypto)
 
-install( TARGETS ssl
+set_target_properties(ssl PROPERTIES
+  VERSION "${LIB_VERSION}" SOVERSION "${LIB_SOVERSION}")
+
+install(TARGETS ssl
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib )
+    ARCHIVE DESTINATION lib)

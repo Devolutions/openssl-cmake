@@ -271,11 +271,7 @@ else()
   add_submodule ( . threads_pthread.c )
 endif()
 
-if( ANDROID )
-  add_library( crypto SHARED ${LIBSRC} ${OBJECTS_SRC} )
-else()
-  add_library( crypto ${LIBSRC} ${OBJECTS_SRC} )
-endif()
+add_library(crypto ${LIBSRC} ${OBJECTS_SRC})
 
 if( WIN32 AND NOT CYGWIN )
   target_link_libraries( crypto ws2_32 crypt32 )
@@ -283,8 +279,8 @@ elseif( Threads_FOUND )
   target_link_libraries( crypto ${CMAKE_THREAD_LIBS_INIT} )
 endif()
 
-set_target_properties( crypto PROPERTIES
-  VERSION "${LIB_VERSION}" SOVERSION "${LIB_SOVERSION}" )
+set_target_properties(crypto PROPERTIES
+  VERSION "${LIB_VERSION}" SOVERSION "${LIB_SOVERSION}")
 
 install( TARGETS crypto
     RUNTIME DESTINATION bin
