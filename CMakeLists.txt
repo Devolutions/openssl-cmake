@@ -115,6 +115,11 @@ if(MSVC)
   configure_msvc_runtime()
 endif()
 
+if(WIN32)
+  set(CMAKE_SHARED_LIBRARY_PREFIX "lib")
+  set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
+endif()
+
 if ( APPLE )
   set( CMAKE_MACOSX_RPATH ON )
   add_definitions( -DOPENSSL_SYSNAME_MACOSX )
