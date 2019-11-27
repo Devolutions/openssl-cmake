@@ -110,6 +110,10 @@ add_definitions( -DOPENSSL_NO_STATIC_ENGINE )
 add_definitions( "-DOPENSSLDIR=\"/usr/local/ssl\"" )
 add_definitions( "-DENGINESDIR=\"/usr/local/engines-1.1\"" )
 
+if(OPENSSL_NO_ASYNC)
+    add_definitions( -DOPENSSL_NO_ASYNC )
+endif()
+
 if(MSVC)
   include(MSVCRuntime)
   configure_msvc_runtime()
