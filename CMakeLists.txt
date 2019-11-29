@@ -114,6 +114,10 @@ if(OPENSSL_NO_ASYNC)
     add_definitions( -DOPENSSL_NO_ASYNC )
 endif()
 
+if(OPENSSL_NO_ENGINE)
+    add_definitions( -DOPENSSL_NO_ENGINE )
+endif()
+
 if(MSVC)
   include(MSVCRuntime)
   configure_msvc_runtime()
