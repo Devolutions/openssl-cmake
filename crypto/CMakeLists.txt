@@ -146,8 +146,10 @@ add_submodule ( dh dh_ameth.c dh_asn1.c dh_check.c dh_depr.c dh_err.c dh_gen.c d
 add_submodule ( dsa dsa_ameth.c dsa_asn1.c dsa_depr.c dsa_err.c dsa_gen.c dsa_key.c
   dsa_lib.c dsa_meth.c dsa_ossl.c dsa_pmeth.c dsa_prn.c dsa_sign.c dsa_vrf.c )
 
-add_submodule ( dso dso_dl.c dso_dlfcn.c dso_err.c dso_lib.c dso_openssl.c dso_vms.c
-  dso_win32.c )
+if(NOT OPENSSL_NO_DSO)
+  add_submodule ( dso dso_dl.c dso_dlfcn.c dso_err.c dso_lib.c dso_openssl.c dso_vms.c
+    dso_win32.c )
+endif()
 
 add_submodule ( ec curve25519.c ec2_oct.c ec2_smpl.c ec_ameth.c ec_asn1.c
   ec_check.c ec_curve.c ec_cvt.c ec_err.c ec_key.c ec_kmeth.c ec_lib.c ec_mult.c
