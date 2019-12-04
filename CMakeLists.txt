@@ -133,15 +133,15 @@ set(OPENSSL_RAND_SEED_LIST
   OPENSSL_RAND_SEED_RDCPU
   OPENSSL_RAND_SEED_EGD)
 
+if(NOT DEFINED OPENSSL_RAND_SEED_OS)
+    set(OPENSSL_RAND_SEED_OS ON)
+endif()
+
 foreach(OPENSSL_RAND_SEED ${OPENSSL_RAND_SEED_LIST})
     if(${OPENSSL_RAND_SEED})
         add_definitions( -D${OPENSSL_RAND_SEED} )
     endif()
 endforeach()
-
-if(NOT DEFINED OPENSSL_RAND_SEED_OS)
-  set(OPENSSL_RAND_SEED_OS ON)
-endif()
 
 if(MSVC)
   include(MSVCRuntime)
