@@ -111,6 +111,7 @@ add_definitions( "-DOPENSSLDIR=\"/usr/local/ssl\"" )
 add_definitions( "-DENGINESDIR=\"/usr/local/engines-1.1\"" )
 
 if(OPENSSL_NO_DSO)
+    add_definitions( -DDSO_NONE )
     add_definitions( -DOPENSSL_NO_DSO )
 endif()
 
@@ -120,6 +121,26 @@ endif()
 
 if(OPENSSL_NO_ENGINE)
     add_definitions( -DOPENSSL_NO_ENGINE )
+endif()
+
+set(OPENSSL_RAND_SEED_LIST
+  OPENSSL_RAND_SEED_NONE
+  OPENSSL_RAND_SEED_OS
+  OPENSSL_RAND_SEED_GETRANDOM
+  OPENSSL_RAND_SEED_LIBRANDOM
+  OPENSSL_RAND_SEED_DEVRANDOM
+  OPENSSL_RAND_SEED_RDTSC
+  OPENSSL_RAND_SEED_RDCPU
+  OPENSSL_RAND_SEED_EGD)
+
+foreach(OPENSSL_RAND_SEED ${OPENSSL_RAND_SEED_LIST})
+    if(${OPENSSL_RAND_SEED})
+        add_definitions( -D${OPENSSL_RAND_SEED} )
+    endif()
+endforeach()
+
+if(NOT DEFINED OPENSSL_RAND_SEED_OS)
+  set(OPENSSL_RAND_SEED_OS ON)
 endif()
 
 if(MSVC)
