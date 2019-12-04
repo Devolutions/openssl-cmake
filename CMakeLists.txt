@@ -139,6 +139,10 @@ foreach(OPENSSL_RAND_SEED ${OPENSSL_RAND_SEED_LIST})
     endif()
 endforeach()
 
+if(NOT DEFINED OPENSSL_RAND_SEED_OS)
+  set(OPENSSL_RAND_SEED_OS ON)
+endif()
+
 if(MSVC)
   include(MSVCRuntime)
   configure_msvc_runtime()
