@@ -80,7 +80,7 @@ if(EXISTS "${OPENSSL_CRYPTO_SRC_DIR}/getenv.c")
     list(APPEND LIBSRC "${OPENSSL_CRYPTO_SRC_DIR}/getenv.c")
 endif()
 
-include_directories(BEFORE SYSTEM
+include_directories(
     "${OPENSSL_CRYPTO_SRC_DIR}/include"
     "${OPENSSL_CRYPTO_SRC_DIR}/modes"
     "${OPENSSL_CRYPTO_SRC_DIR}/ec/curve448"
@@ -91,14 +91,10 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 macro(add_submodule dir)
-    cmake_parse_arguments(add_submodule "" "" "" ${ARGN})
-
-    #message(STATUS "{dir} ${dir}")
-    #message(STATUS "{add_submodule_UNPARSED_ARGUMENTS} ${add_submodule_UNPARSED_ARGUMENTS}")
-    foreach(name ${add_submodule_UNPARSED_ARGUMENTS})
+    foreach(name ${ARGN})
         list(APPEND LIBSRC "${OPENSSL_CRYPTO_SRC_DIR}/${dir}/${name}")
     endforeach(name)
-endmacro(add_submodule)
+endmacro()
 
 add_submodule(aes
     aes_cbc.c

@@ -36,7 +36,7 @@ file(WRITE "${OPENSSL_APPS_BIN_DIR}/tsget" "${TSGET}")
 file(READ "${OPENSSL_APPS_SRC_DIR}/progs.h.cmake" PROGS_H)
 file(WRITE "${OPENSSL_APPS_BIN_DIR}/progs.h" "${PROGS_H}")
 
-include_directories(BEFORE SYSTEM "${OPENSSL_APPS_BIN_DIR}")
+include_directories("${OPENSSL_APPS_BIN_DIR}")
 
 add_definitions(-DMONOLITH)
 
