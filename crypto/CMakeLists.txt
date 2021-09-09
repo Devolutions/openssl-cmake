@@ -51,10 +51,17 @@ endif()
 
 configure_file("${OPENSSL_CRYPTO_BIN_DIR}/opensslconf.h.cmake"
     "${OPENSSL_CRYPTO_BIN_DIR}/openssl/opensslconf.h")
+
+if(EXISTS "${OPENSSL_SRC_DIR}/include/crypto")
+    set(OPENSSL_CRYPTO_CONF_BIN_DIR "${OPENSSL_BIN_DIR}/include/crypto")
+else()
+    set(OPENSSL_CRYPTO_CONF_BIN_DIR "${OPENSSL_BIN_DIR}/crypto/internal")
+endif()
+
 configure_file("${CMAKE_SOURCE_DIR}/crypto/bn_conf.h.cmake"
-    "${OPENSSL_CRYPTO_BIN_DIR}/internal/bn_conf.h")
+    "${OPENSSL_CRYPTO_CONF_BIN_DIR}/bn_conf.h")
 configure_file("${CMAKE_SOURCE_DIR}/crypto/dso_conf.h.cmake"
-    "${OPENSSL_CRYPTO_BIN_DIR}/internal/dso_conf.h")
+    "${OPENSSL_CRYPTO_CONF_BIN_DIR}/dso_conf.h")
 
 set(LIBSRC
     "${OPENSSL_CRYPTO_SRC_DIR}/cpt_err.c"

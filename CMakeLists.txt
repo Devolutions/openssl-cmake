@@ -107,9 +107,11 @@ set(LIB_SOVERSION ${VERSION_MAJOR}.${VERSION_MINOR})
 
 include_directories(
     "${OPENSSL_SRC_DIR}"
-    "${OPENSSL_SRC_DIR}/crypto")
+    "${OPENSSL_SRC_DIR}/crypto"
+    "${OPENSSL_SRC_DIR}/include")
 
 include_directories(
+    "${OPENSSL_BIN_DIR}"
     "${OPENSSL_BIN_DIR}/crypto"
     "${OPENSSL_BIN_DIR}/ssl"
     "${OPENSSL_BIN_DIR}/include")
