@@ -30,7 +30,10 @@ project(openssl)
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
-set(OPENSSL_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+if(NOT DEFINED OPENSSL_SRC_DIR)
+    set(OPENSSL_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+endif()
+
 set(OPENSSL_BIN_DIR "${CMAKE_CURRENT_BINARY_DIR}")
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
@@ -39,7 +42,7 @@ option(WITH_APPS "Build applications" ON)
 
 # OpenSSL version detection imported from FindOpenSSL.cmake
 
-file(STRINGS "${CMAKE_SOURCE_DIR}/include/openssl/opensslv.h" openssl_version_str
+file(STRINGS "${OPENSSL_SRC_DIR}/include/openssl/opensslv.h" openssl_version_str
     REGEX "^#[\t ]*define[\t ]+OPENSSL_VERSION_NUMBER[\t ]+0x([0-9a-fA-F])+.*")
 
 function(from_hex HEX DEC)
