@@ -26,14 +26,14 @@
 set(OPENSSL_APPS_SRC_DIR "${OPENSSL_SRC_DIR}/apps")
 set(OPENSSL_APPS_BIN_DIR "${OPENSSL_BIN_DIR}/apps")
 
-file(READ "${OPENSSL_APPS_SRC_DIR}/CA.pl.cmake" CA_PL)
+file(READ "${CMAKE_SOURCE_DIR}/apps/CA.pl.cmake" CA_PL)
 file(WRITE "${OPENSSL_APPS_BIN_DIR}/CA.pl" "${CA_PL}")
 
-file(READ "${OPENSSL_APPS_SRC_DIR}/tsget.cmake" TSGET)
+file(READ "${CMAKE_SOURCE_DIR}/apps/tsget.cmake" TSGET)
 string(REPLACE "@VERSION_STRING@" "${VERSION_STRING}" TSGET "${TSGET}")
 file(WRITE "${OPENSSL_APPS_BIN_DIR}/tsget" "${TSGET}")
 
-file(READ "${OPENSSL_APPS_SRC_DIR}/progs.h.cmake" PROGS_H)
+file(READ "${CMAKE_SOURCE_DIR}/apps/progs.h.cmake" PROGS_H)
 file(WRITE "${OPENSSL_APPS_BIN_DIR}/progs.h" "${PROGS_H}")
 
 include_directories("${OPENSSL_APPS_BIN_DIR}")

@@ -28,7 +28,7 @@ include(CMakeParseArguments)
 set(OPENSSL_CRYPTO_SRC_DIR "${OPENSSL_SRC_DIR}/crypto")
 set(OPENSSL_CRYPTO_BIN_DIR "${OPENSSL_BIN_DIR}/crypto")
 
-file(READ "${OPENSSL_SRC_DIR}/opensslconf.h.cmake" CONF)
+file(READ "${CMAKE_SOURCE_DIR}/opensslconf.h.cmake" CONF)
 set(CONF "
 #define OPENSSL_NO_MD2
 #define OPENSSL_NO_RC5
@@ -38,7 +38,7 @@ ${CONF}")
 file(WRITE "${OPENSSL_CRYPTO_BIN_DIR}/opensslconf.h.cmake" "${CONF}")
 
 #~2DO: set BUILDINF_DATE to `date LC_ALL=C LC_TIME=C`
-configure_file("${OPENSSL_CRYPTO_SRC_DIR}/buildinf.h.cmake"
+configure_file("${CMAKE_SOURCE_DIR}/crypto/buildinf.h.cmake"
     "${OPENSSL_CRYPTO_BIN_DIR}/buildinf.h")
 
 if(APPLE)
@@ -51,9 +51,9 @@ endif()
 
 configure_file("${OPENSSL_CRYPTO_BIN_DIR}/opensslconf.h.cmake"
     "${OPENSSL_CRYPTO_BIN_DIR}/openssl/opensslconf.h")
-configure_file("${OPENSSL_CRYPTO_SRC_DIR}/bn_conf.h.cmake"
+configure_file("${CMAKE_SOURCE_DIR}/crypto/bn_conf.h.cmake"
     "${OPENSSL_CRYPTO_BIN_DIR}/internal/bn_conf.h")
-configure_file("${OPENSSL_CRYPTO_SRC_DIR}/dso_conf.h.cmake"
+configure_file("${CMAKE_SOURCE_DIR}/crypto/dso_conf.h.cmake"
     "${OPENSSL_CRYPTO_BIN_DIR}/internal/dso_conf.h")
 
 set(LIBSRC

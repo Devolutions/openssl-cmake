@@ -218,15 +218,15 @@ endif()
 file(COPY "${OPENSSL_SRC_DIR}/include/internal" DESTINATION include)
 file(COPY "${OPENSSL_SRC_DIR}/include/openssl" DESTINATION include)
 
-configure_file("${OPENSSL_SRC_DIR}/opensslconf.h.cmake"
+configure_file("${CMAKE_SOURCE_DIR}/opensslconf.h.cmake"
     "${OPENSSL_BIN_DIR}/include/openssl/opensslconf.h")
 
-file(READ "${OPENSSL_SRC_DIR}/c_rehash.cmake" C_REHASH)
+file(READ "${CMAKE_SOURCE_DIR}/c_rehash.cmake" C_REHASH)
 string(REPLACE "@OPENSSLDIR@" "${OPENSSLDIR}" C_REHASH "${C_REHASH}")
 string(REPLACE "@CMAKE_INSTALL_PREFIX@" "${CMAKE_INSTALL_PREFIX}" C_REHASH "${C_REHASH}")
-file(WRITE ${OPENSSL_BIN_DIR}/c_rehash "${C_REHASH}")
+file(WRITE "${OPENSSL_BIN_DIR}/c_rehash" "${C_REHASH}")
 
-install(DIRECTORY ${OPENSSL_BIN_DIR}/include/openssl DESTINATION include)
+install(DIRECTORY "${OPENSSL_BIN_DIR}/include/openssl" DESTINATION include)
 
 install(FILES
     "${OPENSSL_BIN_DIR}/c_rehash"
