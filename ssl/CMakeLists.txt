@@ -23,28 +23,65 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+set(OPENSSL_SSL_SRC_DIR "${OPENSSL_SRC_DIR}/ssl")
+set(OPENSSL_SSL_BIN_DIR "${OPENSSL_BIN_DIR}/ssl")
+
 if(BUILD_SHARED_LIBS)
     add_definitions(-DOPENSSL_BUILD_SHLIBSSL)
 endif()
 
 set(LIBSRC
-  bio_ssl.c d1_lib.c d1_msg.c d1_srtp.c methods.c packet.c pqueue.c s3_cbc.c s3_enc.c s3_lib.c
-  s3_msg.c ssl_asn1.c ssl_cert.c ssl_ciph.c ssl_conf.c ssl_err.c ssl_init.c ssl_lib.c
-  ssl_mcnf.c ssl_rsa.c ssl_sess.c ssl_stat.c ssl_txt.c ssl_utst.c t1_enc.c t1_lib.c
-  t1_trce.c tls13_enc.c tls_srp.c
-  record/dtls1_bitmap.c record/rec_layer_d1.c record/rec_layer_s3.c record/ssl3_buffer.c
-  record/ssl3_record.c record/ssl3_record_tls13.c
-  statem/extensions.c statem/extensions_clnt.c statem/extensions_cust.c
-  statem/extensions_srvr.c statem/statem.c statem/statem_clnt.c statem/statem_dtls.c
-  statem/statem_lib.c statem/statem_srvr.c
-  )
+    "${OPENSSL_SSL_SRC_DIR}/bio_ssl.c"
+    "${OPENSSL_SSL_SRC_DIR}/d1_lib.c"
+    "${OPENSSL_SSL_SRC_DIR}/d1_msg.c"
+    "${OPENSSL_SSL_SRC_DIR}/d1_srtp.c"
+    "${OPENSSL_SSL_SRC_DIR}/methods.c"
+    "${OPENSSL_SSL_SRC_DIR}/packet.c"
+    "${OPENSSL_SSL_SRC_DIR}/pqueue.c"
+    "${OPENSSL_SSL_SRC_DIR}/s3_cbc.c"
+    "${OPENSSL_SSL_SRC_DIR}/s3_enc.c"
+    "${OPENSSL_SSL_SRC_DIR}/s3_lib.c"
+    "${OPENSSL_SSL_SRC_DIR}/s3_msg.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_asn1.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_cert.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_ciph.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_conf.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_err.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_init.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_lib.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_mcnf.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_rsa.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_sess.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_stat.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_txt.c"
+    "${OPENSSL_SSL_SRC_DIR}/ssl_utst.c"
+    "${OPENSSL_SSL_SRC_DIR}/t1_enc.c"
+    "${OPENSSL_SSL_SRC_DIR}/t1_lib.c"
+    "${OPENSSL_SSL_SRC_DIR}/t1_trce.c"
+    "${OPENSSL_SSL_SRC_DIR}/tls13_enc.c"
+    "${OPENSSL_SSL_SRC_DIR}/tls_srp.c"
+    "${OPENSSL_SSL_SRC_DIR}/record/dtls1_bitmap.c"
+    "${OPENSSL_SSL_SRC_DIR}/record/rec_layer_d1.c"
+    "${OPENSSL_SSL_SRC_DIR}/record/rec_layer_s3.c"
+    "${OPENSSL_SSL_SRC_DIR}/record/ssl3_buffer.c"
+    "${OPENSSL_SSL_SRC_DIR}/record/ssl3_record.c"
+    "${OPENSSL_SSL_SRC_DIR}/record/ssl3_record_tls13.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/extensions.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/extensions_clnt.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/extensions_cust.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/extensions_srvr.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/statem.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/statem_clnt.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/statem_dtls.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/statem_lib.c"
+    "${OPENSSL_SSL_SRC_DIR}/statem/statem_srvr.c")
 
 add_library(ssl ${LIBSRC})
 
 target_link_libraries(ssl crypto)
 
 set_target_properties(ssl PROPERTIES
-  VERSION "${LIB_VERSION}" SOVERSION "${LIB_SOVERSION}")
+    VERSION "${LIB_VERSION}" SOVERSION "${LIB_SOVERSION}")
 
 install(TARGETS ssl
     RUNTIME DESTINATION bin

@@ -23,41 +23,92 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-file( READ ${CMAKE_CURRENT_SOURCE_DIR}/CA.pl.cmake CA_PL )
-file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/CA.pl "${CA_PL}" )
+set(OPENSSL_APPS_SRC_DIR "${OPENSSL_SRC_DIR}/apps")
+set(OPENSSL_APPS_BIN_DIR "${OPENSSL_BIN_DIR}/apps")
 
-file( READ ${CMAKE_CURRENT_SOURCE_DIR}/tsget.cmake TSGET )
-string( REPLACE "@VERSION_STRING@" "${VERSION_STRING}" TSGET "${TSGET}" )
-file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/tsget "${TSGET}" )
+file(READ "${CMAKE_SOURCE_DIR}/apps/CA.pl.cmake" CA_PL)
+file(WRITE "${OPENSSL_APPS_BIN_DIR}/CA.pl" "${CA_PL}")
 
-file( READ ${CMAKE_CURRENT_SOURCE_DIR}/progs.h.cmake PROGS_H )
-file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/progs.h "${PROGS_H}" )
+file(READ "${CMAKE_SOURCE_DIR}/apps/tsget.cmake" TSGET)
+string(REPLACE "@VERSION_STRING@" "${VERSION_STRING}" TSGET "${TSGET}")
+file(WRITE "${OPENSSL_APPS_BIN_DIR}/tsget" "${TSGET}")
 
-include_directories( BEFORE SYSTEM ${CMAKE_CURRENT_BINARY_DIR} )
+file(READ "${CMAKE_SOURCE_DIR}/apps/progs.h.cmake" PROGS_H)
+file(WRITE "${OPENSSL_APPS_BIN_DIR}/progs.h" "${PROGS_H}")
 
-add_definitions ( -DMONOLITH )
+include_directories("${OPENSSL_APPS_BIN_DIR}")
 
-set ( E_SRC
-  app_rand.c apps.c asn1pars.c bf_prefix.c ca.c ciphers.c cms.c crl.c crl2p7.c dgst.c dhparam.c
-  dsa.c dsaparam.c ec.c ecparam.c enc.c engine.c errstr.c gendsa.c genpkey.c
-  genrsa.c nseq.c ocsp.c openssl.c opt.c passwd.c pkcs12.c pkcs7.c pkcs8.c pkey.c
-  pkeyparam.c pkeyutl.c prime.c rand.c rehash.c req.c rsa.c rsautl.c s_cb.c
-  s_client.c s_server.c s_socket.c s_time.c sess_id.c smime.c speed.c spkac.c storeutl.c srp.c
-  ts.c verify.c version.c x509.c )
+add_definitions(-DMONOLITH)
+
+set(E_SRC
+    "${OPENSSL_APPS_SRC_DIR}/app_rand.c"
+    "${OPENSSL_APPS_SRC_DIR}/apps.c"
+    "${OPENSSL_APPS_SRC_DIR}/asn1pars.c"
+    "${OPENSSL_APPS_SRC_DIR}/bf_prefix.c"
+    "${OPENSSL_APPS_SRC_DIR}/ca.c"
+    "${OPENSSL_APPS_SRC_DIR}/ciphers.c"
+    "${OPENSSL_APPS_SRC_DIR}/cms.c"
+    "${OPENSSL_APPS_SRC_DIR}/crl.c"
+    "${OPENSSL_APPS_SRC_DIR}/crl2p7.c"
+    "${OPENSSL_APPS_SRC_DIR}/dgst.c"
+    "${OPENSSL_APPS_SRC_DIR}/dhparam.c"
+    "${OPENSSL_APPS_SRC_DIR}/dsa.c"
+    "${OPENSSL_APPS_SRC_DIR}/dsaparam.c"
+    "${OPENSSL_APPS_SRC_DIR}/ec.c"
+    "${OPENSSL_APPS_SRC_DIR}/ecparam.c"
+    "${OPENSSL_APPS_SRC_DIR}/enc.c"
+    "${OPENSSL_APPS_SRC_DIR}/engine.c"
+    "${OPENSSL_APPS_SRC_DIR}/errstr.c"
+    "${OPENSSL_APPS_SRC_DIR}/gendsa.c"
+    "${OPENSSL_APPS_SRC_DIR}/genpkey.c"
+    "${OPENSSL_APPS_SRC_DIR}/genrsa.c"
+    "${OPENSSL_APPS_SRC_DIR}/nseq.c"
+    "${OPENSSL_APPS_SRC_DIR}/ocsp.c"
+    "${OPENSSL_APPS_SRC_DIR}/openssl.c"
+    "${OPENSSL_APPS_SRC_DIR}/opt.c"
+    "${OPENSSL_APPS_SRC_DIR}/passwd.c"
+    "${OPENSSL_APPS_SRC_DIR}/pkcs12.c"
+    "${OPENSSL_APPS_SRC_DIR}/pkcs7.c"
+    "${OPENSSL_APPS_SRC_DIR}/pkcs8.c"
+    "${OPENSSL_APPS_SRC_DIR}/pkey.c"
+    "${OPENSSL_APPS_SRC_DIR}/pkeyparam.c"
+    "${OPENSSL_APPS_SRC_DIR}/pkeyutl.c"
+    "${OPENSSL_APPS_SRC_DIR}/prime.c"
+    "${OPENSSL_APPS_SRC_DIR}/rand.c"
+    "${OPENSSL_APPS_SRC_DIR}/rehash.c"
+    "${OPENSSL_APPS_SRC_DIR}/req.c"
+    "${OPENSSL_APPS_SRC_DIR}/rsa.c"
+    "${OPENSSL_APPS_SRC_DIR}/rsautl.c"
+    "${OPENSSL_APPS_SRC_DIR}/s_cb.c"
+    "${OPENSSL_APPS_SRC_DIR}/s_client.c"
+    "${OPENSSL_APPS_SRC_DIR}/s_server.c"
+    "${OPENSSL_APPS_SRC_DIR}/s_socket.c"
+    "${OPENSSL_APPS_SRC_DIR}/s_time.c"
+    "${OPENSSL_APPS_SRC_DIR}/sess_id.c"
+    "${OPENSSL_APPS_SRC_DIR}/smime.c"
+    "${OPENSSL_APPS_SRC_DIR}/speed.c"
+    "${OPENSSL_APPS_SRC_DIR}/spkac.c"
+    "${OPENSSL_APPS_SRC_DIR}/storeutl.c"
+    "${OPENSSL_APPS_SRC_DIR}/srp.c"
+    "${OPENSSL_APPS_SRC_DIR}/ts.c"
+    "${OPENSSL_APPS_SRC_DIR}/verify.c"
+    "${OPENSSL_APPS_SRC_DIR}/version.c"
+    "${OPENSSL_APPS_SRC_DIR}/x509.c")
 
 if(WIN32)
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/win32_init.c")
-    list(APPEND E_SRC win32_init.c)
-  endif()
+    if(EXISTS "${OPENSSL_APPS_SRC_DIR}/win32_init.c")
+        list(APPEND E_SRC "${OPENSSL_APPS_SRC_DIR}/win32_init.c")
+    endif()
 endif()
 
-add_executable ( openssl ${E_SRC} )
-target_link_libraries ( openssl crypto ssl )
+add_executable(openssl ${E_SRC})
 
-install( TARGETS openssl
-    RUNTIME DESTINATION bin )
+target_link_libraries(openssl crypto ssl)
 
-install( FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/CA.pl
-  ${CMAKE_CURRENT_BINARY_DIR}/tsget
-  DESTINATION share/openssl )
+install(TARGETS openssl
+    RUNTIME DESTINATION bin)
+
+install(FILES
+    "${OPENSSL_APPS_BIN_DIR}/CA.pl"
+    "${OPENSSL_APPS_BIN_DIR}/tsget"
+    DESTINATION share/openssl)
